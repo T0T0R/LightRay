@@ -14,11 +14,15 @@ class Plane
 		/***** ACCESSORS *****/
 		std::vector<float> getRGB();
 
+		/***** METHODS *****/
+		std::vector<float> calcNormal(std::vector<std::vector<float> > points);
+
+
 	protected:
 	private:
-		std::vector<float> RGB;
-		std::vector<float> normalToPlane;
-		std::vector<float> refPoint;
+		std::vector<float> RGB (3);
+		std::vector<float> normalToPlane(3);
+		std::vector<float> refPoint(3);
 };
 
 #endif // PLANE_H

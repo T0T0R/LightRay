@@ -7,25 +7,25 @@
 class LightRay
 {
 	public:
-		LightRay(float const& intensity, std::vector<float> const& colorRGB, std::vector<float> const& position, std::vector<float> const& direction);
+		LightRay(std::vector<float> const& colorRGB, std::vector<float> const& position, std::vector<float> const& direction);
 		virtual ~LightRay();
 
-		/***** ACCESSSORS *****/
-		float getIntensity();
+		/***** ACCESSORS *****/
 		std::vector<float> getPosition();
 		std::vector<float> getDirection();
 		std::vector<float> getRGB();
 
 		/***** METHODS *****/
-		std::vector<float> update(float const& newIntensity, std::vector<float> const& newDirection);
+		int update(std::vector<float> const& newColor, std::vector<float> const& newDirection);
+		std::vector<float> newColor(std::vector<float> const& emissionColor);
+
 
 	protected:
 	private:
 		int nbBumps;
-		float intensity;
-		std::vector<float> RGB;
-		std::vector<float> position;
-		std::vector<float> direction;
+		std::vector<float> RGB(3);
+		std::vector<float> position(3);
+		std::vector<float> direction(3);
 
 
 };
