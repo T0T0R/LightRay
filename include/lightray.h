@@ -2,6 +2,7 @@
 #define LIGHTRAY_H
 
 #include <vector>
+#include <math.h>
 
 
 class LightRay
@@ -23,9 +24,9 @@ class LightRay
 	protected:
 	private:
 		int nbBumps;
-		std::vector<float> RGB(3);
-		std::vector<float> position(3);
-		std::vector<float> direction(3);
+		std::vector<float> RGB;
+		std::vector<float> position;
+		std::vector<float> direction;
 
 
 };

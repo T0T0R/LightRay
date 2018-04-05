@@ -35,9 +35,9 @@ int LightRay::update(vector<float> const& newColor, vector<float> const& newDire
 
 vector<float> LightRay::newColor(vector<float> const& emissionColor){
 	vector<float> answer (3);
-	for (int i=0, i<=2, i++){
-		if (emissionColor[i] >= RGB[i]){ answer[i]==RGB[i]; }
-		else{ answer[i]==emissionColor[i]; }
+	for (int i=0; i<=2; i++){
+		if (emissionColor[i] >= RGB[i]){ answer[i] = RGB[i]; }
+		else{ answer[i] = emissionColor[i]; }
 	}
 	return answer;
 }
