@@ -2,33 +2,38 @@
 #define LIGHTRAY_H
 
 #include <vector>
-#include <math.h>
+#include <cmath>
 
+#include "vector3.h"
+
+/**
+	std::vector<float>(3)	: used to store color and objects
+	Vector3					: used to store 3 coordinates (position, direction...)
+*/
 
 class LightRay
 {
 	public:
 		LightRay(std::vector<float> const& colorRGB, std::vector<float> const& position, std::vector<float> const& direction);
+		LightRay(std::vector<float> const& colorRGB, Vector3 const& position, Vector3 const& direction);
 		virtual ~LightRay();
 
 		/***** ACCESSORS *****/
-		std::vector<float> getPosition();
-		std::vector<float> getDirection();
+		Vector3 getPosition();
+		Vector3 getDirection();
 		std::vector<float> getRGB();
 
 		/***** METHODS *****/
-		int update(std::vector<float> const& newColor, std::vector<float> const& newDirection);
-		std::vector<float> newColor(std::vector<float> const& emissionColor);
-
+		int update(std::vector<float> const& newColor, Vector3 const& newDirection);	//TO DO
+		std::vector<float> newColor(std::vector<float> const& incidentColor);
+		int debug();
 
 	protected:
 	private:
 		int nbBumps;
 		std::vector<float> RGB;
-		std::vector<float> position;
-		std::vector<float> direction;
-
-
+		Vector3 position;
+		Vector3 direction;
 };
 
 #endif // LIGHTRAY_H

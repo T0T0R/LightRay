@@ -1,32 +1,43 @@
 #ifndef PLANE_H
 #define PLANE_H
 
+#include <iostream>
 #include <vector>
-#include <math.h>
+#include <cmath>
 
+#include "lightray.h"
+#include "vector3.h"
+
+/**
+	std::vector<float>(3)	: used to store color and objects
+	Vector3					: used to store 3 coordinates (position, direction...)
+*/
 
 class Plane
 {
 	public:
 		Plane(std::vector<float> const& color, std::vector<std::vector<float> > const& points);
+		Plane(std::vector<float> const& color, std::vector<Vector3 > const& points);
 		virtual ~Plane();
 
 		/***** ACCESSORS *****/
 		std::vector<float> getRGB();
-		std::vector<float> getNormal();
-		std::vector<std::vector<float> > getPoints();
+		Vector3 getNormal();
+		Vector3 getPoint();
+		std::vector<Vector3> getPoints();
 
 		/***** METHODS *****/
-		std::vector<float> calcNormal(std::vector<std::vector<float> > const& points);
-		std::vector<float> normalize(std::vector<float> & vec);
-
+		Vector3 calcNormal(std::vector<Vector3> & points);
+		Vector3 intersect(LightRay ray);	//TO DO
+		int reflect(LightRay & incidentRay);	//TO DO
+		int debug();
 
 	protected:
 	private:
 		std::vector<float> RGB;
-		std::vector<float> normalVector;
-		std::vector<float> refPoint;
-		std::vector<std::vector<float> > refPoints;
+		Vector3 normalVector;
+		Vector3 refPoint;
+		std::vector<Vector3> refPoints;
 };
 
 #endif // PLANE_H

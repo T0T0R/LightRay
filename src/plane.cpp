@@ -1,11 +1,31 @@
 #include "plane.h"
 
+/**
+	std::vector<float>(3)	: used to store color and objects
+	Vector3					: used to store 3 coordinates (position, direction...)
+*/
+
 using namespace std;
 
-Plane::Plane(vector<float> const& color, vector<std::vector<float> > const& points):
+Plane::Plane(vector<float> const& color, vector<vector<float> > const& points):
+	RGB(color), refPoint(points[0]), refPoints(3)
+{
+	Vector3 A(points[0]);
+	Vector3 B(points[1]);
+	Vector3 C(points[2]);
+
+	refPoints[0] = A;
+	refPoints[1] = B;
+	refPoints[2] = C;
+
+	normalVector = calcNormal(refPoints);
+}
+
+
+Plane::Plane(vector<float> const& color, vector<Vector3> const& points):
 	RGB(color), refPoint(points[0]), refPoints(points)
 {
-	normalVector = calcNormal(points);
+	normalVector = calcNormal(refPoints);
 }
 
 
@@ -15,50 +35,59 @@ Plane::~Plane()
 }
 
 
+
+
 /***** ACCESSORS *****/
 vector<float> Plane::getRGB(){
 	return RGB;
 }
 
-vector<float> Plane::getNormal(){
+
+Vector3 Plane::getNormal(){
 	return normalVector;
 }
 
-std::vector<std::vector<float> > Plane::getPoints(){
+
+Vector3 Plane::getPoint(){
+	return refPoint;
+}
+
+
+vector<Vector3 > Plane::getPoints(){
 	return refPoints;
 }
 
+
+
 /***** METHODS *****/
-vector<float> Plane::calcNormal(vector<vector<float> > const& points){
+Vector3 Plane::calcNormal(vector<Vector3> & points){
 	//Vectors definitions:
-	float U[3];
-	float V[3];
-	U[0] = points[0][0] - points[1][0];
-	U[1] = points[0][1] - points[1][1];
-	U[2] = points[0][2] - points[1][2];
-	V[0] = points[2][0] - points[1][0];
-	V[1] = points[2][1] - points[1][1];
-	V[2] = points[2][2] - points[1][2];
+	Vector3 U( points[0].x()-points[1].x(), points[0].y()-points[1].y(), points[0].z()-points[1].z() );
+	Vector3 V( points[2].x()-points[1].x(), points[2].y()-points[1].y(), points[2].z()-points[1].z() );
 
 	//Normal vector:
-	vector<float> normal(3);
-
 	//Vector product
-	normal[0] = ( U[1]*V[2]-U[2]*V[1] );
-	normal[1] = ( U[2]*V[0]-U[0]*V[2] );
-	normal[2] = ( U[0]*V[1]-U[1]*V[0] );
+	Vector3 normal(U.y()*V.z()-U.z()*V.y(), U.z()*V.x()-U.x()*V.z(), U.x()*V.y()-U.y()*V.x());
 
-	normalize(normal);
+	normal.normalize();
 	return normal;
 }
 
-vector<float> Plane::normalize(vector<float> & vec){
-	float x = vec[0]/sqrt(pow(vec[0],2)+pow(vec[1],2)+pow(vec[2],2));
-	float y = vec[1]/sqrt(pow(vec[0],2)+pow(vec[1],2)+pow(vec[2],2));
-	float z = vec[2]/sqrt(pow(vec[0],2)+pow(vec[1],2)+pow(vec[2],2));
-	vec[0]=x;
-	vec[1]=y;
-	vec[2]=z;
-	return vec;
+
+Vector3 Plane::intersect(LightRay){	//TO DO
+
 }
 
+
+int Plane::reflect(LightRay & incidentRay){	//TO DO
+	Vector3 incidentDir = incidentRay.getDirection();
+	return 0;
+}
+
+
+int Plane::debug(){
+	cout<<"[DEBUG - PLANE] - color:"<<RGB[0]<<";"<<RGB[1]<<";"<<RGB[2]<<
+		" normal:"<<normalVector.x()<<";"<<normalVector.y()<<";"<<normalVector.z()<<
+		" refPoint:"<<refPoint.x()<<";"<<refPoint.y()<<";"<<refPoint.z()<<endl;
+	return 0;
+}
