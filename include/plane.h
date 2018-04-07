@@ -28,6 +28,7 @@ class Plane
 
 		/***** METHODS *****/
 		Vector3 calcNormal(std::vector<Vector3> & points);
+		std::vector<float> getEquation();
 		Vector3 intersect(LightRay ray);	//TO DO
 		int reflect(LightRay & incidentRay);	//TO DO
 		int debug();

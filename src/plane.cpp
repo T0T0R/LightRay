@@ -74,6 +74,16 @@ Vector3 Plane::calcNormal(vector<Vector3> & points){
 }
 
 
+vector<float> Plane::getEquation(){
+	vector<float> equation(4);
+	equation[0] = normalVector.x();
+	equation[1] = normalVector.y();
+	equation[2] = normalVector.z();
+	equation[3] = -1*( normalVector.x()*refPoint.x() +  normalVector.y()*refPoint.y() + normalVector.z()*refPoint.z());
+	return equation;
+}
+
+
 Vector3 Plane::intersect(LightRay){	//TO DO
 
 }
