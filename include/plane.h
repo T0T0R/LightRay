@@ -1,12 +1,20 @@
 #ifndef PLANE_H
 #define PLANE_H
 
+#ifdef __cplusplus
+#include <cstdlib>
+#else
+#include <stdlib.h>
+#endif
+
 #include <iostream>
 #include <vector>
 #include <cmath>
 
-#include "lightray.h"
-#include "vector3.h"
+#define ZERO 1E-7 //define near zero limit
+
+#include "../include/lightray.h"
+#include "../include/vector3.h"
 
 /**
 	std::vector<float>(3)	: used to store color and objects
@@ -18,20 +26,21 @@ class Plane
 	public:
 		Plane(std::vector<float> const& color, std::vector<std::vector<float> > const& points);
 		Plane(std::vector<float> const& color, std::vector<Vector3 > const& points);
+		Plane(std::vector<float> const& color, std::vector<float> const& equation);
 		virtual ~Plane();
 
 		/***** ACCESSORS *****/
-		std::vector<float> getRGB();
-		Vector3 getNormal();
-		Vector3 getPoint();
-		std::vector<Vector3> getPoints();
+		std::vector<float> getRGB() const;
+		Vector3 getNormal() const;
+		Vector3 getPoint() const;
+		std::vector<Vector3> getPoints() const;
 
 		/***** METHODS *****/
-		Vector3 calcNormal(std::vector<Vector3> & points);
-		std::vector<float> getEquation();
-		Vector3 intersect(LightRay ray);	//TO DO
-		int reflect(LightRay & incidentRay);	//TO DO
-		int debug();
+		Vector3 calcNormal(std::vector<Vector3> const& points);
+		std::vector<float> getEquation() const;
+		Vector3 intersect(LightRay const& ray) const;	//TO DO
+		int reflect(LightRay & incidentRay) const;	//TO DO
+		int debug() const;
 
 	protected:
 	private:

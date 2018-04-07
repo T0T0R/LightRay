@@ -1,4 +1,4 @@
-#include "vector3.h"
+#include "../include/vector3.h"
 
 /**
 	std::vector<float>(3)	: used to store color and objects
@@ -23,7 +23,7 @@ Vector3::Vector3(int x, int y, int z)
 	Z = (float) z;
 }
 
-Vector3::Vector3(vector<float> vec):
+Vector3::Vector3(vector<float> const& vec):
 	X(vec[0]), Y(vec[1]), Z(vec[2])
 {}
 
@@ -35,9 +35,9 @@ Vector3::~Vector3()
 
 
 /***** ACCESSORS *****/
-float Vector3::x(){return X;}
-float Vector3::y(){return Y;}
-float Vector3::z(){return Z;}
+float Vector3::x() const {return X;}
+float Vector3::y() const {return Y;}
+float Vector3::z() const {return Z;}
 
 
 
@@ -60,7 +60,7 @@ Vector3 Vector3::normalize(){
 }
 
 
-vector<float> Vector3::toVector(){
+vector<float> Vector3::toVector() const{
 	vector<float> myVec(3);
 	myVec[0] = X;
 	myVec[1] = Y;
@@ -69,7 +69,31 @@ vector<float> Vector3::toVector(){
 }
 
 
-int Vector3::debug(){
+int Vector3::debug() const{
 	cout<<"[DEBUG - VECTOR3] - "<<X<<";"<<Y<<";"<<Z<<endl;
-	return 0;
+	return EXIT_SUCCESS;
+}
+
+
+Vector3 Vector3::product(Vector3 const& V) const{
+	Vector3 result(Y*V.z()-Z*V.y(), Z*V.x()-X*V.z(), X*V.y()-Y*V.x());
+	return result;
+}
+
+
+Vector3 Vector3::product(vector<float> const& vec) const{
+	Vector3 V(vec);
+	Vector3 result(Y*V.z()-Z*V.y(), Z*V.x()-X*V.z(), X*V.y()-Y*V.x());
+	return result;
+}
+
+
+float Vector3::scalar(Vector3 const& vec) const{
+	return (X*vec.x()+Y*vec.y()+Z*vec.z());
+}
+
+
+float Vector3::scalar(vector<float> const& vec) const{
+	Vector3 V(vec);
+	return (X*V.x()+Y*V.y()+Z*V.z());
 }
